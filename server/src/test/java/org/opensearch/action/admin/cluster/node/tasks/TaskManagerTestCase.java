@@ -63,7 +63,6 @@ import org.opensearch.core.xcontent.NamedXContentRegistry;
 import org.opensearch.tasks.TaskCancellationService;
 import org.opensearch.tasks.TaskManager;
 import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
 import org.opensearch.test.tasks.MockTaskManager;
@@ -224,8 +223,7 @@ public abstract class TaskManagerTestCase extends OpenSearchTestCase {
                 boundTransportAddressDiscoveryNodeFunction,
                 null,
                 Collections.emptySet(),
-                NoopTracer.INSTANCE,
-                NoopMetricsRegistry.INSTANCE
+                NoopTracer.INSTANCE
             ) {
                 @Override
                 protected TaskManager createTaskManager(

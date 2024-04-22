@@ -1332,8 +1332,7 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
             x -> clusterService.localNode(),
             null,
             Collections.emptySet(),
-            NoopTracer.INSTANCE,
-            NoopMetricsRegistry.INSTANCE
+            NoopTracer.INSTANCE
         );
         transportService.start();
         transportService.acceptIncomingRequests();

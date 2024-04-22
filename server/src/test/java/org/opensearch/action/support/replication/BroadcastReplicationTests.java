@@ -62,7 +62,6 @@ import org.opensearch.core.indices.breaker.CircuitBreakerService;
 import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
 import org.opensearch.core.rest.RestStatus;
 import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
 import org.opensearch.threadpool.TestThreadPool;
@@ -129,8 +128,7 @@ public class BroadcastReplicationTests extends OpenSearchTestCase {
             x -> clusterService.localNode(),
             null,
             Collections.emptySet(),
-            NoopTracer.INSTANCE,
-            NoopMetricsRegistry.INSTANCE
+            NoopTracer.INSTANCE
         );
         transportService.start();
         transportService.acceptIncomingRequests();

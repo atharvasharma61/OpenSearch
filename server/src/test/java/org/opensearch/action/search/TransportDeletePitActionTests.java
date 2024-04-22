@@ -28,7 +28,6 @@ import org.opensearch.index.query.MatchAllQueryBuilder;
 import org.opensearch.index.query.QueryBuilder;
 import org.opensearch.index.query.TermQueryBuilder;
 import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
 import org.opensearch.test.transport.MockTransportService;
@@ -145,8 +144,7 @@ public class TransportDeletePitActionTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE,
-                    NoopMetricsRegistry.INSTANCE
+                    NoopTracer.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -209,8 +207,7 @@ public class TransportDeletePitActionTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE,
-                    NoopMetricsRegistry.INSTANCE
+                    NoopTracer.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -325,8 +322,7 @@ public class TransportDeletePitActionTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE,
-                    NoopMetricsRegistry.INSTANCE
+                    NoopTracer.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -389,8 +385,7 @@ public class TransportDeletePitActionTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE,
-                    NoopMetricsRegistry.INSTANCE
+                    NoopTracer.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -448,8 +443,7 @@ public class TransportDeletePitActionTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE,
-                    NoopMetricsRegistry.INSTANCE
+                    NoopTracer.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -514,8 +508,7 @@ public class TransportDeletePitActionTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE,
-                    NoopMetricsRegistry.INSTANCE
+                    NoopTracer.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -592,8 +585,7 @@ public class TransportDeletePitActionTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE,
-                    NoopMetricsRegistry.INSTANCE
+                    NoopTracer.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -666,8 +658,7 @@ public class TransportDeletePitActionTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE,
-                    NoopMetricsRegistry.INSTANCE
+                    NoopTracer.INSTANCE
                 )
             ) {
                 transportService.start();

@@ -468,8 +468,7 @@ public class TransportWriteActionTests extends OpenSearchTestCase {
                     x -> null,
                     null,
                     Collections.emptySet(),
-                    NoopTracer.INSTANCE,
-                    NoopMetricsRegistry.INSTANCE
+                    NoopTracer.INSTANCE
                 ),
                 TransportWriteActionTests.this.clusterService,
                 null,

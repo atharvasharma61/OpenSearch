@@ -112,7 +112,6 @@ import org.opensearch.plugins.IndexStorePlugin;
 import org.opensearch.repositories.RepositoriesService;
 import org.opensearch.script.ScriptService;
 import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.ClusterServiceUtils;
 import org.opensearch.test.IndexSettingsModule;
@@ -209,8 +208,7 @@ public class IndexModuleTests extends OpenSearchTestCase {
             boundAddress -> DiscoveryNode.createLocal(settings, boundAddress.publishAddress(), UUIDs.randomBase64UUID()),
             null,
             Collections.emptySet(),
-            NoopTracer.INSTANCE,
-            NoopMetricsRegistry.INSTANCE
+            NoopTracer.INSTANCE
         );
         repositoriesService = new RepositoriesService(
             settings,
