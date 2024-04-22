@@ -57,7 +57,6 @@ import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
 import org.opensearch.node.Node;
 import org.opensearch.plugins.Plugin;
 import org.opensearch.tasks.TaskManager;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
 import org.opensearch.telemetry.tracing.Tracer;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
@@ -117,8 +116,8 @@ public final class MockTransportService extends TransportService {
         }
     }
 
-    public static MockTransportService createNewService(Settings settings, Version version, ThreadPool threadPool, Tracer tracer, MetricsRegistry metricsRegistry) {
-        return createNewService(settings, version, threadPool, null, tracer, metricsRegistry);
+    public static MockTransportService createNewService(Settings settings, Version version, ThreadPool threadPool, Tracer tracer) {
+        return createNewService(settings, version, threadPool, null, tracer);
     }
 
     public static MockTransportService createNewService(
@@ -126,11 +125,10 @@ public final class MockTransportService extends TransportService {
         Version version,
         ThreadPool threadPool,
         @Nullable ClusterSettings clusterSettings,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
         MockNioTransport mockTransport = newMockTransport(settings, version, threadPool);
-        return createNewService(settings, mockTransport, version, threadPool, clusterSettings, Collections.emptySet(), tracer, metricsRegistry);
+        return createNewService(settings, mockTransport, version, threadPool, clusterSettings, Collections.emptySet(), tracer);
     }
 
     public static MockNioTransport newMockTransport(Settings settings, Version version, ThreadPool threadPool) {
@@ -155,10 +153,9 @@ public final class MockTransportService extends TransportService {
         ThreadPool threadPool,
         @Nullable ClusterSettings clusterSettings,
         Set<String> taskHeaders,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
-        return createNewService(settings, transport, version, threadPool, clusterSettings, taskHeaders, NOOP_TRANSPORT_INTERCEPTOR, tracer, metricsRegistry);
+        return createNewService(settings, transport, version, threadPool, clusterSettings, taskHeaders, NOOP_TRANSPORT_INTERCEPTOR, tracer);
     }
 
     public static MockTransportService createNewService(
@@ -169,8 +166,7 @@ public final class MockTransportService extends TransportService {
         @Nullable ClusterSettings clusterSettings,
         Set<String> taskHeaders,
         TransportInterceptor interceptor,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
         return new MockTransportService(
             settings,
@@ -187,8 +183,7 @@ public final class MockTransportService extends TransportService {
             ),
             clusterSettings,
             taskHeaders,
-            tracer,
-            metricsRegistry
+            tracer
         );
     }
 
@@ -207,8 +202,7 @@ public final class MockTransportService extends TransportService {
         ThreadPool threadPool,
         TransportInterceptor interceptor,
         @Nullable ClusterSettings clusterSettings,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
         this(
             settings,
@@ -222,8 +216,7 @@ public final class MockTransportService extends TransportService {
             ),
             clusterSettings,
             Collections.emptySet(),
-            tracer,
-            metricsRegistry
+            tracer
         );
     }
 
@@ -242,10 +235,9 @@ public final class MockTransportService extends TransportService {
         Function<BoundTransportAddress, DiscoveryNode> localNodeFactory,
         @Nullable ClusterSettings clusterSettings,
         Set<String> taskHeaders,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
-        this(settings, new StubbableTransport(transport), threadPool, interceptor, localNodeFactory, clusterSettings, taskHeaders, tracer, metricsRegistry);
+        this(settings, new StubbableTransport(transport), threadPool, interceptor, localNodeFactory, clusterSettings, taskHeaders, tracer);
     }
 
     private MockTransportService(
@@ -256,8 +248,7 @@ public final class MockTransportService extends TransportService {
         Function<BoundTransportAddress, DiscoveryNode> localNodeFactory,
         @Nullable ClusterSettings clusterSettings,
         Set<String> taskHeaders,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
         super(
             settings,
@@ -268,8 +259,7 @@ public final class MockTransportService extends TransportService {
             clusterSettings,
             taskHeaders,
             new StubbableConnectionManager(new ClusterConnectionManager(settings, transport)),
-            tracer,
-            metricsRegistry
+            tracer
         );
         this.original = transport.getDelegate();
     }

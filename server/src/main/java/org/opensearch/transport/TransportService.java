@@ -67,7 +67,6 @@ import org.opensearch.node.NodeClosedException;
 import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
 import org.opensearch.tasks.Task;
 import org.opensearch.tasks.TaskManager;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
 import org.opensearch.telemetry.tracing.Span;
 import org.opensearch.telemetry.tracing.SpanBuilder;
 import org.opensearch.telemetry.tracing.SpanScope;
@@ -144,7 +143,6 @@ public class TransportService extends AbstractLifecycleComponent
 
     private final RemoteClusterService remoteClusterService;
     private final Tracer tracer;
-    private final MetricsRegistry metricsRegistry;
 
     /** if set will call requests sent to this id to shortcut and executed locally */
     volatile DiscoveryNode localNode = null;
@@ -199,8 +197,7 @@ public class TransportService extends AbstractLifecycleComponent
         Function<BoundTransportAddress, DiscoveryNode> localNodeFactory,
         @Nullable ClusterSettings clusterSettings,
         Set<String> taskHeaders,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
         this(
             settings,
@@ -211,8 +208,7 @@ public class TransportService extends AbstractLifecycleComponent
             clusterSettings,
             taskHeaders,
             new ClusterConnectionManager(settings, transport),
-            tracer,
-            metricsRegistry
+            tracer
         );
     }
 
@@ -225,8 +221,7 @@ public class TransportService extends AbstractLifecycleComponent
         @Nullable ClusterSettings clusterSettings,
         Set<String> taskHeaders,
         ConnectionManager connectionManager,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
         this.transport = transport;
         transport.setSlowLogThreshold(TransportSettings.SLOW_OPERATION_THRESHOLD_SETTING.get(settings));
@@ -242,7 +237,6 @@ public class TransportService extends AbstractLifecycleComponent
         this.asyncSender = interceptor.interceptSender(this::sendRequestInternal);
         this.remoteClusterClient = DiscoveryNode.isRemoteClusterClient(settings);
         this.tracer = tracer;
-        this.metricsRegistry = metricsRegistry;
         remoteClusterService = new RemoteClusterService(settings, this);
         responseHandlers = transport.getResponseHandlers();
         if (clusterSettings != null) {

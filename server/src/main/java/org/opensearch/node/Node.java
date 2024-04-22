@@ -1004,8 +1004,7 @@ public class Node implements Closeable {
                 localNodeFactory,
                 settingsModule.getClusterSettings(),
                 taskHeaders,
-                tracer,
-                metricsRegistry
+                tracer
             );
             TopNSearchTasksLogger taskConsumer = new TopNSearchTasksLogger(settings, settingsModule.getClusterSettings());
             transportService.getTaskManager().registerTaskResourceConsumer(taskConsumer);
@@ -1369,10 +1368,9 @@ public class Node implements Closeable {
         Function<BoundTransportAddress, DiscoveryNode> localNodeFactory,
         ClusterSettings clusterSettings,
         Set<String> taskHeaders,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
-        return new TransportService(settings, transport, threadPool, interceptor, localNodeFactory, clusterSettings, taskHeaders, tracer, metricsRegistry);
+        return new TransportService(settings, transport, threadPool, interceptor, localNodeFactory, clusterSettings, taskHeaders, tracer);
     }
 
     protected void processRecoverySettings(ClusterSettings clusterSettings, RecoverySettings recoverySettings) {

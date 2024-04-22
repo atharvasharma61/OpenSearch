@@ -45,7 +45,6 @@ import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
 import org.opensearch.core.common.io.stream.StreamInput;
 import org.opensearch.core.common.transport.BoundTransportAddress;
 import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
 import org.opensearch.telemetry.tracing.Tracer;
 import org.opensearch.threadpool.ThreadPool;
 import org.opensearch.transport.CloseableConnection;
@@ -83,8 +82,7 @@ public class MockTransport extends StubbableTransport {
         Function<BoundTransportAddress, DiscoveryNode> localNodeFactory,
         @Nullable ClusterSettings clusterSettings,
         Set<String> taskHeaders,
-        Tracer tracer,
-        MetricsRegistry metricsRegistry
+        Tracer tracer
     ) {
         StubbableConnectionManager connectionManager = new StubbableConnectionManager(new ClusterConnectionManager(settings, this));
         connectionManager.setDefaultNodeConnectedBehavior((cm, node) -> false);
@@ -98,8 +96,7 @@ public class MockTransport extends StubbableTransport {
             clusterSettings,
             taskHeaders,
             connectionManager,
-            tracer,
-            metricsRegistry
+            tracer
         );
     }
 

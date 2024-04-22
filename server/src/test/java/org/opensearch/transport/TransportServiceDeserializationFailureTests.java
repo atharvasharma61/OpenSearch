@@ -43,7 +43,6 @@ import org.opensearch.core.tasks.TaskId;
 import org.opensearch.core.transport.TransportResponse;
 import org.opensearch.tasks.Task;
 import org.opensearch.tasks.TaskAwareRequest;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
 import org.opensearch.test.transport.MockTransport;
@@ -85,8 +84,7 @@ public class TransportServiceDeserializationFailureTests extends OpenSearchTestC
             ignored -> localNode,
             null,
             Collections.emptySet(),
-            NoopTracer.INSTANCE,
-            NoopMetricsRegistry.INSTANCE
+            NoopTracer.INSTANCE
         );
 
         transportService.registerRequestHandler(
