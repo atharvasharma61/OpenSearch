@@ -89,6 +89,7 @@ import org.opensearch.monitor.NodeHealthService;
 import org.opensearch.monitor.StatusInfo;
 import org.opensearch.node.remotestore.RemoteStoreNodeService;
 import org.opensearch.repositories.RepositoriesService;
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
 import org.opensearch.test.disruption.DisruptableMockTransport;
@@ -1130,7 +1131,8 @@ public class AbstractCoordinatorTestCase extends OpenSearchTestCase {
                     a -> localNode,
                     null,
                     emptySet(),
-                    NoopTracer.INSTANCE
+                    NoopTracer.INSTANCE,
+                    NoopMetricsRegistry.INSTANCE
                 );
                 clusterManagerService = new AckedFakeThreadPoolClusterManagerService(
                     localNode.getId(),

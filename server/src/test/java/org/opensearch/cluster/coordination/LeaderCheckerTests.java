@@ -44,6 +44,7 @@ import org.opensearch.core.common.io.stream.StreamInput;
 import org.opensearch.core.transport.TransportResponse;
 import org.opensearch.core.transport.TransportResponse.Empty;
 import org.opensearch.monitor.StatusInfo;
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.EqualsHashCodeTestUtils;
 import org.opensearch.test.EqualsHashCodeTestUtils.CopyFunction;
@@ -169,7 +170,8 @@ public class LeaderCheckerTests extends OpenSearchTestCase {
             boundTransportAddress -> localNode,
             null,
             emptySet(),
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
         transportService.start();
         transportService.acceptIncomingRequests();
@@ -287,7 +289,8 @@ public class LeaderCheckerTests extends OpenSearchTestCase {
             boundTransportAddress -> localNode,
             null,
             emptySet(),
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
         transportService.start();
         transportService.acceptIncomingRequests();
@@ -401,7 +404,8 @@ public class LeaderCheckerTests extends OpenSearchTestCase {
             boundTransportAddress -> localNode,
             null,
             emptySet(),
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
         transportService.start();
         transportService.acceptIncomingRequests();
@@ -448,7 +452,8 @@ public class LeaderCheckerTests extends OpenSearchTestCase {
             boundTransportAddress -> localNode,
             null,
             emptySet(),
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
         transportService.start();
         transportService.acceptIncomingRequests();

@@ -1994,7 +1994,7 @@ public class SnapshotResiliencyTests extends OpenSearchTestCase {
                             return actualHandler;
                         }
                     }
-                }, a -> node, null, emptySet(), NoopTracer.INSTANCE);
+                }, a -> node, null, emptySet(), NoopTracer.INSTANCE, NoopMetricsRegistry.INSTANCE);
                 final IndexNameExpressionResolver indexNameExpressionResolver = new IndexNameExpressionResolver(
                     new ThreadContext(Settings.EMPTY)
                 );

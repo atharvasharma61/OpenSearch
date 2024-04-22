@@ -29,6 +29,7 @@ import org.opensearch.common.settings.ClusterSettings;
 import org.opensearch.common.settings.Settings;
 import org.opensearch.common.util.concurrent.ThreadContext;
 import org.opensearch.core.common.io.stream.StreamInput;
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
 import org.opensearch.test.transport.CapturingTransport;
@@ -84,7 +85,8 @@ public class ClusterAwarenessHealthTests extends OpenSearchTestCase {
             x -> clusterService.localNode(),
             null,
             Collections.emptySet(),
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
         transportService.start();
         transportService.acceptIncomingRequests();

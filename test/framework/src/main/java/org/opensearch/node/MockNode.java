@@ -51,6 +51,7 @@ import org.opensearch.env.Environment;
 import org.opensearch.http.HttpServerTransport;
 import org.opensearch.indices.IndicesService;
 import org.opensearch.indices.recovery.RecoverySettings;
+import org.opensearch.monitor.os.OsStats;
 import org.opensearch.plugins.Plugin;
 import org.opensearch.script.MockScriptService;
 import org.opensearch.script.ScriptContext;
@@ -60,6 +61,7 @@ import org.opensearch.search.MockSearchService;
 import org.opensearch.search.SearchService;
 import org.opensearch.search.fetch.FetchPhase;
 import org.opensearch.search.query.QueryPhase;
+import org.opensearch.telemetry.metrics.MetricsRegistry;
 import org.opensearch.telemetry.tracing.Tracer;
 import org.opensearch.test.MockHttpTransport;
 import org.opensearch.test.transport.MockTransportService;
@@ -201,7 +203,8 @@ public class MockNode extends Node {
         Function<BoundTransportAddress, DiscoveryNode> localNodeFactory,
         ClusterSettings clusterSettings,
         Set<String> taskHeaders,
-        Tracer tracer
+        Tracer tracer,
+        MetricsRegistry metricsRegistry
     ) {
         // we use the MockTransportService.TestPlugin class as a marker to create a network
         // module with this MockNetworkService. NetworkService is such an integral part of the systme
@@ -216,7 +219,8 @@ public class MockNode extends Node {
                 localNodeFactory,
                 clusterSettings,
                 taskHeaders,
-                tracer
+                tracer,
+                metricsRegistry
             );
         } else {
             return new MockTransportService(
@@ -227,7 +231,8 @@ public class MockNode extends Node {
                 localNodeFactory,
                 clusterSettings,
                 taskHeaders,
-                tracer
+                tracer,
+                metricsRegistry
             );
         }
     }

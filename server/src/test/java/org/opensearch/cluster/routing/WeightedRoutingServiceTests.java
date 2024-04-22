@@ -31,6 +31,7 @@ import org.opensearch.cluster.service.ClusterService;
 import org.opensearch.common.settings.ClusterSettings;
 import org.opensearch.common.settings.Settings;
 import org.opensearch.core.action.ActionListener;
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.ClusterServiceUtils;
 import org.opensearch.test.OpenSearchTestCase;
@@ -96,7 +97,8 @@ public class WeightedRoutingServiceTests extends OpenSearchTestCase {
             boundTransportAddress -> clusterService.state().nodes().get("nodes1"),
             null,
             Collections.emptySet(),
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
 
         Settings.Builder settingsBuilder = Settings.builder()

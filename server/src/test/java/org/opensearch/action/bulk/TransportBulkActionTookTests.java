@@ -57,6 +57,7 @@ import org.opensearch.index.IndexNotFoundException;
 import org.opensearch.index.IndexingPressureService;
 import org.opensearch.indices.SystemIndices;
 import org.opensearch.tasks.Task;
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
 import org.opensearch.test.VersionUtils;
@@ -127,7 +128,8 @@ public class TransportBulkActionTookTests extends OpenSearchTestCase {
             boundAddress -> clusterService.localNode(),
             null,
             Collections.emptySet(),
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
         transportService.start();
         transportService.acceptIncomingRequests();

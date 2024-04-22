@@ -46,6 +46,7 @@ import org.opensearch.indices.replication.common.ReplicationCollection;
 import org.opensearch.indices.replication.common.ReplicationFailedException;
 import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
 import org.opensearch.indices.replication.common.ReplicationType;
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.junit.annotations.TestLogging;
 import org.opensearch.test.transport.CapturingTransport;
@@ -133,7 +134,8 @@ public class SegmentReplicationTargetServiceTests extends IndexShardTestCase {
             boundAddress -> localNode,
             null,
             Collections.emptySet(),
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
         transportService.start();
         transportService.acceptIncomingRequests();

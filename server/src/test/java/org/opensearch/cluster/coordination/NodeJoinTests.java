@@ -61,6 +61,7 @@ import org.opensearch.monitor.NodeHealthService;
 import org.opensearch.monitor.StatusInfo;
 import org.opensearch.node.Node;
 import org.opensearch.node.remotestore.RemoteStoreNodeService;
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.ClusterServiceUtils;
 import org.opensearch.test.OpenSearchTestCase;
@@ -249,7 +250,8 @@ public class NodeJoinTests extends OpenSearchTestCase {
             x -> initialState.nodes().getLocalNode(),
             clusterSettings,
             Collections.emptySet(),
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
         final PersistedStateRegistry persistedStateRegistry = persistedStateRegistry();
         persistedStateRegistry.addPersistedState(PersistedStateType.LOCAL, new InMemoryPersistedState(term, initialState));
