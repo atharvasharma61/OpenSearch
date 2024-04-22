@@ -61,6 +61,7 @@ import org.opensearch.plugins.SecureTransportSettingsProvider;
 import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
 import org.opensearch.tasks.RawTaskStatus;
 import org.opensearch.tasks.Task;
+import org.opensearch.telemetry.metrics.MetricsRegistry;
 import org.opensearch.telemetry.tracing.Tracer;
 import org.opensearch.threadpool.ThreadPool;
 import org.opensearch.transport.Transport;
@@ -176,6 +177,7 @@ public final class NetworkModule {
         HttpServerTransport.Dispatcher dispatcher,
         ClusterSettings clusterSettings,
         Tracer tracer,
+        MetricsRegistry metricsRegistry,
         List<TransportInterceptor> transportInterceptors,
         Collection<SecureSettingsFactory> secureSettingsFactories
     ) {
@@ -216,7 +218,8 @@ public final class NetworkModule {
                 networkService,
                 dispatcher,
                 clusterSettings,
-                tracer
+                tracer,
+                metricsRegistry
             );
             for (Map.Entry<String, Supplier<HttpServerTransport>> entry : httpTransportFactory.entrySet()) {
                 registerHttpTransport(entry.getKey(), entry.getValue());
@@ -229,7 +232,8 @@ public final class NetworkModule {
                 circuitBreakerService,
                 namedWriteableRegistry,
                 networkService,
-                tracer
+                tracer,
+                metricsRegistry
             );
             for (Map.Entry<String, Supplier<Transport>> entry : transportFactory.entrySet()) {
                 registerTransport(entry.getKey(), entry.getValue());
@@ -250,7 +254,8 @@ public final class NetworkModule {
                     dispatcher,
                     clusterSettings,
                     secureSettingProvider,
-                    tracer
+                    tracer,
+                    metricsRegistry
                 );
                 for (Map.Entry<String, Supplier<HttpServerTransport>> entry : secureHttpTransportFactory.entrySet()) {
                     registerHttpTransport(entry.getKey(), entry.getValue());
@@ -269,7 +274,8 @@ public final class NetworkModule {
                     namedWriteableRegistry,
                     networkService,
                     secureSettingProvider,
-                    tracer
+                    tracer,
+                    metricsRegistry
                 );
                 for (Map.Entry<String, Supplier<Transport>> entry : secureTransportFactory.entrySet()) {
                     registerTransport(entry.getKey(), entry.getValue());

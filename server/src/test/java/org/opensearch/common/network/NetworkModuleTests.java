@@ -51,6 +51,8 @@ import org.opensearch.plugins.SecureHttpTransportSettingsProvider;
 import org.opensearch.plugins.SecureSettingsFactory;
 import org.opensearch.plugins.SecureTransportSettingsProvider;
 import org.opensearch.plugins.TransportExceptionHandler;
+import org.opensearch.telemetry.metrics.MetricsRegistry;
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.Tracer;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
@@ -177,8 +179,8 @@ public class NetworkModuleTests extends OpenSearchTestCase {
                 CircuitBreakerService circuitBreakerService,
                 NamedWriteableRegistry namedWriteableRegistry,
                 NetworkService networkService,
-                Tracer tracer
-            ) {
+                Tracer tracer,
+                MetricsRegistry metricsRegistry) {
                 return Collections.singletonMap("custom", custom);
             }
         };
@@ -205,8 +207,8 @@ public class NetworkModuleTests extends OpenSearchTestCase {
                 NetworkService networkService,
                 HttpServerTransport.Dispatcher requestDispatcher,
                 ClusterSettings clusterSettings,
-                Tracer tracer
-            ) {
+                Tracer tracer,
+                MetricsRegistry metricsRegistry) {
                 return Collections.singletonMap("custom", custom);
             }
         });
@@ -230,8 +232,8 @@ public class NetworkModuleTests extends OpenSearchTestCase {
                 NamedWriteableRegistry namedWriteableRegistry,
                 NetworkService networkService,
                 SecureTransportSettingsProvider secureTransportSettingsProvider,
-                Tracer tracer
-            ) {
+                Tracer tracer,
+                MetricsRegistry metricsRegistry) {
                 return Collections.singletonMap("custom-secure", custom);
             }
         };
@@ -259,8 +261,8 @@ public class NetworkModuleTests extends OpenSearchTestCase {
                 HttpServerTransport.Dispatcher requestDispatcher,
                 ClusterSettings clusterSettings,
                 SecureHttpTransportSettingsProvider secureTransportSettingsProvider,
-                Tracer tracer
-            ) {
+                Tracer tracer,
+                MetricsRegistry metricsRegistry) {
                 return Collections.singletonMap("custom-secure", custom);
             }
         });
@@ -286,8 +288,8 @@ public class NetworkModuleTests extends OpenSearchTestCase {
                 CircuitBreakerService circuitBreakerService,
                 NamedWriteableRegistry namedWriteableRegistry,
                 NetworkService networkService,
-                Tracer tracer
-            ) {
+                Tracer tracer,
+                MetricsRegistry metricsRegistry) {
                 return Collections.singletonMap("default_custom", customTransport);
             }
 
@@ -302,8 +304,8 @@ public class NetworkModuleTests extends OpenSearchTestCase {
                 NetworkService networkService,
                 HttpServerTransport.Dispatcher requestDispatcher,
                 ClusterSettings clusterSettings,
-                Tracer tracer
-            ) {
+                Tracer tracer,
+                MetricsRegistry metricsRegistry) {
                 Map<String, Supplier<HttpServerTransport>> supplierMap = new HashMap<>();
                 supplierMap.put("custom", custom);
                 supplierMap.put("default_custom", def);
@@ -331,8 +333,8 @@ public class NetworkModuleTests extends OpenSearchTestCase {
                 CircuitBreakerService circuitBreakerService,
                 NamedWriteableRegistry namedWriteableRegistry,
                 NetworkService networkService,
-                Tracer tracer
-            ) {
+                Tracer tracer,
+                MetricsRegistry metricsRegistry) {
                 return Collections.singletonMap("default_custom", customTransport);
             }
 
@@ -347,8 +349,8 @@ public class NetworkModuleTests extends OpenSearchTestCase {
                 NetworkService networkService,
                 HttpServerTransport.Dispatcher requestDispatcher,
                 ClusterSettings clusterSettings,
-                Tracer tracer
-            ) {
+                Tracer tracer,
+                MetricsRegistry metricsRegistry) {
                 Map<String, Supplier<HttpServerTransport>> supplierMap = new HashMap<>();
                 supplierMap.put("custom", custom);
                 supplierMap.put("default_custom", def);
@@ -635,6 +637,7 @@ public class NetworkModuleTests extends OpenSearchTestCase {
             new NullDispatcher(),
             new ClusterSettings(Settings.EMPTY, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS),
             NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE,
             coreTransportInterceptors,
             secureSettingsFactories
         );
@@ -653,8 +656,8 @@ public class NetworkModuleTests extends OpenSearchTestCase {
                 NamedWriteableRegistry namedWriteableRegistry,
                 NetworkService networkService,
                 SecureTransportSettingsProvider secureTransportSettingsProvider,
-                Tracer tracer
-            ) {
+                Tracer tracer,
+                MetricsRegistry metricsRegistry) {
                 return Collections.singletonMap("custom-secure", custom);
             }
         };

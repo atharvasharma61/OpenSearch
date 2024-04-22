@@ -22,6 +22,7 @@ import org.opensearch.http.reactor.netty4.ReactorNetty4HttpServerTransport;
 import org.opensearch.plugins.NetworkPlugin;
 import org.opensearch.plugins.Plugin;
 import org.opensearch.plugins.SecureHttpTransportSettingsProvider;
+import org.opensearch.telemetry.metrics.MetricsRegistry;
 import org.opensearch.telemetry.tracing.Tracer;
 import org.opensearch.threadpool.ThreadPool;
 
@@ -63,16 +64,18 @@ public class ReactorNetty4Plugin extends Plugin implements NetworkPlugin {
     /**
      * Returns a map of {@link HttpServerTransport} suppliers.
      * See {@link org.opensearch.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
-     * @param settings settings
-     * @param networkService network service
-     * @param bigArrays big array allocator
-     * @param pageCacheRecycler page cache recycler instance
+     *
+     * @param settings              settings
+     * @param threadPool            thread pool instance
+     * @param bigArrays             big array allocator
+     * @param pageCacheRecycler     page cache recycler instance
      * @param circuitBreakerService circuit breaker service instance
-     * @param threadPool thread pool instance
-     * @param xContentRegistry XContent registry instance
-     * @param dispatcher dispatcher instance
-     * @param clusterSettings cluster settings
-     * @param tracer tracer instance
+     * @param xContentRegistry      XContent registry instance
+     * @param networkService        network service
+     * @param dispatcher            dispatcher instance
+     * @param clusterSettings       cluster settings
+     * @param tracer                tracer instance
+     * @param metricsRegistry
      */
     @Override
     public Map<String, Supplier<HttpServerTransport>> getHttpTransports(
@@ -83,10 +86,10 @@ public class ReactorNetty4Plugin extends Plugin implements NetworkPlugin {
         CircuitBreakerService circuitBreakerService,
         NamedXContentRegistry xContentRegistry,
         NetworkService networkService,
-        HttpServerTransport.Dispatcher dispatcher,
+        Dispatcher dispatcher,
         ClusterSettings clusterSettings,
-        Tracer tracer
-    ) {
+        Tracer tracer,
+        MetricsRegistry metricsRegistry) {
         return Collections.singletonMap(
             REACTOR_NETTY_HTTP_TRANSPORT_NAME,
             () -> new ReactorNetty4HttpServerTransport(
@@ -107,17 +110,19 @@ public class ReactorNetty4Plugin extends Plugin implements NetworkPlugin {
     /**
      * Returns a map of {@link HttpServerTransport} suppliers.
      * See {@link org.opensearch.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
-     * @param settings settings
-     * @param networkService network service
-     * @param bigArrays big array allocator
-     * @param pageCacheRecycler page cache recycler instance
-     * @param circuitBreakerService circuit breaker service instance
-     * @param threadPool thread pool instance
-     * @param xContentRegistry XContent registry instance
-     * @param dispatcher dispatcher instance
-     * @param clusterSettings cluster settings
+     *
+     * @param settings                            settings
+     * @param threadPool                          thread pool instance
+     * @param bigArrays                           big array allocator
+     * @param pageCacheRecycler                   page cache recycler instance
+     * @param circuitBreakerService               circuit breaker service instance
+     * @param xContentRegistry                    XContent registry instance
+     * @param networkService                      network service
+     * @param dispatcher                          dispatcher instance
+     * @param clusterSettings                     cluster settings
      * @param secureHttpTransportSettingsProvider secure HTTP transport settings provider
-     * @param tracer tracer instance
+     * @param tracer                              tracer instance
+     * @param metricsRegistry
      */
     @Override
     public Map<String, Supplier<HttpServerTransport>> getSecureHttpTransports(
@@ -131,8 +136,8 @@ public class ReactorNetty4Plugin extends Plugin implements NetworkPlugin {
         Dispatcher dispatcher,
         ClusterSettings clusterSettings,
         SecureHttpTransportSettingsProvider secureHttpTransportSettingsProvider,
-        Tracer tracer
-    ) {
+        Tracer tracer,
+        MetricsRegistry metricsRegistry) {
         return Collections.singletonMap(
             REACTOR_NETTY_SECURE_HTTP_TRANSPORT_NAME,
             () -> new ReactorNetty4HttpServerTransport(

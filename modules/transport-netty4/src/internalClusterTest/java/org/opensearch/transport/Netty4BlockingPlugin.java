@@ -17,6 +17,7 @@ import org.opensearch.core.indices.breaker.CircuitBreakerService;
 import org.opensearch.core.xcontent.NamedXContentRegistry;
 import org.opensearch.http.HttpServerTransport;
 import org.opensearch.http.netty4.Netty4HttpServerTransport;
+import org.opensearch.telemetry.metrics.MetricsRegistry;
 import org.opensearch.telemetry.tracing.Tracer;
 import org.opensearch.threadpool.ThreadPool;
 
@@ -83,8 +84,8 @@ public class Netty4BlockingPlugin extends Netty4ModulePlugin {
         NetworkService networkService,
         HttpServerTransport.Dispatcher dispatcher,
         ClusterSettings clusterSettings,
-        Tracer tracer
-    ) {
+        Tracer tracer,
+        MetricsRegistry metricsRegistry) {
         return Collections.singletonMap(
             NETTY_HTTP_TRANSPORT_NAME,
             () -> new Netty4BlockingHttpServerTransport(
