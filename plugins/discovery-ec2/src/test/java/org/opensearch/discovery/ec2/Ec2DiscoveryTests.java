@@ -32,6 +32,7 @@
 
 package org.opensearch.discovery.ec2;
 
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import software.amazon.awssdk.services.ec2.model.Instance;
 import software.amazon.awssdk.services.ec2.model.InstanceState;
 import software.amazon.awssdk.services.ec2.model.InstanceStateName;
@@ -107,7 +108,8 @@ public class Ec2DiscoveryTests extends AbstractEc2MockAPITestCase {
             threadPool,
             TransportService.NOOP_TRANSPORT_INTERCEPTOR,
             null,
-            NoopTracer.INSTANCE
+            NoopTracer.INSTANCE,
+            NoopMetricsRegistry.INSTANCE
         );
     }
 

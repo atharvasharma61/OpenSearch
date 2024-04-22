@@ -32,6 +32,7 @@ import org.opensearch.search.SearchHits;
 import org.opensearch.search.aggregations.InternalAggregations;
 import org.opensearch.search.internal.InternalSearchResponse;
 import org.opensearch.tasks.Task;
+import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
 import org.opensearch.telemetry.tracing.noop.NoopTracer;
 import org.opensearch.test.OpenSearchTestCase;
 import org.opensearch.test.transport.MockTransportService;
@@ -181,7 +182,8 @@ public class CreatePitControllerTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE
+                    NoopTracer.INSTANCE,
+                    NoopMetricsRegistry.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -274,7 +276,8 @@ public class CreatePitControllerTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE
+                    NoopTracer.INSTANCE,
+                    NoopMetricsRegistry.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -367,7 +370,8 @@ public class CreatePitControllerTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE
+                    NoopTracer.INSTANCE,
+                    NoopMetricsRegistry.INSTANCE
                 )
             ) {
                 transportService.start();
@@ -463,7 +467,8 @@ public class CreatePitControllerTests extends OpenSearchTestCase {
                     Settings.EMPTY,
                     Version.CURRENT,
                     threadPool,
-                    NoopTracer.INSTANCE
+                    NoopTracer.INSTANCE,
+                    NoopMetricsRegistry.INSTANCE
                 )
             ) {
                 transportService.start();
